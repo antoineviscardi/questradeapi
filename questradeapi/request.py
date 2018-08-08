@@ -96,14 +96,111 @@ def get_symbols(names=None, ids=None, id=None):
 	params={}
 	endpoint = 'v1/symbols'
 	if names:
-		params.update({'names': ','.join(map(str, names))})
+		if isinstance(names, str):
+			params.update({'names': names})
+		else:
+			params.update({'names': ','.join(names)})
 	elif ids:
 		params.update({'ids': ','.join(map(str, ids))})
 	elif id:
 		endpoint += '/' + str(id)
 	return utils.do_get(endpoint, params)
 
+def search(prefix, offset=None):
+	''' Retrieves symbol(s) using several search criteria.
 
+	Arguments:
+	prefix (String)	--	Prefix of a symbol or any word in the description
+	offset (int)	--	Offset in number of records from the beginning of a 
+						result set.
+	'''
+	params={'prefix': prefix}
+	if offset:
+		params.update({'offset': offset})
+	return utils.do_get('v1/symbols/search', params)
+
+def get_option_chain(id):
+	'''Retrieves an option chain for a particular underlying symbol.
+
+	Arguments:
+	id (int)	--	Internal symbol identifier
+	'''
+	return utils.do_get('v1/symbols/{}/options'.format(id))
+
+def get_markets():
+	'''Retrieves information about supported markets.
+	'''
+	return utils.do_get('v1/markets')
+
+def get_quotes(id=None, ids=None):
+	'''Retrieves a single Level 1 market data quote for one or more symbols.
+
+	Arguments:
+	id (int)		--	Internal symbol identifier (mutually exclusive with 
+						'ids' argument)
+	ids (int list)	--	Comman-separated list of symbol ids
+	'''
+	endpoint = 'v1/markets/quotes'
+	if id:
+		endpoint += '/' + str(id)
+		return utils.do_get(endpoint)
+	else:
+		params = {'ids': ','.join(map(str, ids))}
+		return utils.do_get(endpoint, params)
+
+def get_quotes_options(filters=None, ids=None):
+	''' Retrieves a single Level 1 market data quote and Greek data for one or
+	more option symbols.
+
+	Arguments:
+	filters (dic list)	--	Array of OptionIdFilter structures
+	ids (int list)		--	Array of option IDs
+
+	OptionIdFilter structures:
+	optionType (list)		--	Option type
+	underlyingId (int)		--	Underlying ID
+	expiryDate (datetime)	--	Expiry date
+	minstrikePrice (double)	--	Min strike price
+	maxstrikePrice (double)	--	Max strike price
+	'''
+	pass
+
+def get_quotes_strategies(variants):
+	'''Retrieve a calculated L1 market data quote for a single or many multi-leg
+	strategies.
+	
+	Arguments:
+	variants (dic list)	--	Array of Strategy Variants
+
+	StrategyVariantRequest:
+	variantId (int)	--	Variant ID
+	strategy (enum)	--	Strategy type 
+	legs (dic list)	--	Array of Strategy legs
+
+	StrategyLeg:
+	symbolId (int)	--	Internal symbol identifier
+	action (enum)	--	Order side
+	ratio (int)		--	Numeric ration of the leg strategy
+	'''
+	pass
+
+def get_candles(id, start_time, end_time, interval):
+	'''Retrieves historical market data in the form of OHLC candlesticks for a 
+	specified symbol. This call is limited to returning 2,000 candlesticks in
+	a single response.
+
+	Arguments:
+	id (int)				--	Internal symbol indentifier
+	startTime (datetime)	--	Beginning of the candlestick range
+	endTime (datetime)		--	End of the candlestick range
+	interval (enum)			--	Interval of a single candlestick
+	'''
+	params = {
+		'startTime': utils.add_local_tz(start_time),
+		'endTime': utils.add_local_tz(end_time), 
+		'interval': interval
+	}
+	return utils.do_get('v1/markets/candles/{}'.format(id), params)
 
 '''
 DEV TESTING
