@@ -4,8 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-request = "*"
 requests = "*"
+tzlocal = "*"
 
 [dev-packages]
 
