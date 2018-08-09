@@ -1,16 +1,35 @@
 import requests
+import time
+import json
 from datetime import datetime
 from tzlocal import get_localzone
 
-REFRESH_TOKEN_FILE = 'refresh_token.txt'
+TOKEN_FILE = 'token.json'
 ACCESS_TOKEN_HOST = 'https://login.questrade.com'
 ACCESS_TOKEN_ENDPOINT = '/oauth2/token'
 
-def redeem_refresh_token(refresh_token):
-    ''' Redeems the given refresh token to the questrade login server.
+def get_access_data():
+    '''Returns the data required to access the server, namely a access token and
+    the api server's address in a tuple.
 
-    Returns a json representation of the returned data which contains, among
-    other things, an access token and a new refresh token.
+    If the access token is expired, the refresh token is redeemed.
+    '''
+    with open(TOKEN_FILE, 'r') as f:
+        token_data = json.load(f)
+    now = time.time()
+    expires_at = token_data.get('expires_at', 0)
+    if now > expires_at:
+        token_data = redeem_refresh_token(token_data['refresh_token'])
+        with open(TOKEN_FILE, 'w') as f:
+            json.dump(token_data, f)
+    return (token_data['access_token'], token_data['api_server'])
+
+def redeem_refresh_token(refresh_token):
+    ''' Redeems the given refresh token to the questrade login server and 
+    returnes the received data.
+
+    Prior to returning the data, the expiry time of the access token is computed 
+    and added to the data.
     '''
     params = {
         'grant_type': 'refresh_token',
@@ -20,33 +39,47 @@ def redeem_refresh_token(refresh_token):
         ACCESS_TOKEN_HOST + ACCESS_TOKEN_ENDPOINT, 
         params=params
     )
-    return r.json()
-
-def update_refresh_token(refresh_token):
-    ''' Saves the given refresh token by overriding the previous one.
-    '''
-    with open(REFRESH_TOKEN_FILE, 'w') as wf:
-        wf.write(refresh_token)
+    json_data = r.json()
+    expires_at = time.time() + json_data['expires_in']
+    json_data['expires_at'] = expires_at
+    return json_data
 
 def do_get(endpoint, params={}):
-    ''' Performs a get request to the Questrade API.
-
-    The refresh token is redeemed, giving the required access token and the
-    address of the server to which to request can be sent.
+    ''' Performs a GET request to the Questrade API.
 
     Arguments:
     endpoint    --  the webservice endpoint te request is sent to.
     params      --  the parameters to add to the request
     '''
-    with open(REFRESH_TOKEN_FILE, 'r') as fr:
-        refresh_token = fr.read()
-    redeemed_data = redeem_refresh_token(refresh_token)
-    update_refresh_token(redeemed_data['refresh_token'])
-    access_token = redeemed_data['access_token']
-    api_server = redeemed_data['api_server']
+    access_token, api_server = get_access_data()
     headers = {'Authorization': 'Bearer {}'.format(access_token)}
     r = requests.get(api_server + endpoint, headers=headers, params=params)
     return r.json()
+
+def do_post(endpoint, params={}):
+    ''' Performs a POST request to the Questrade API.
+
+    Arguments:
+    endpoint    --  the webservice endpoint te request is sent to.
+    params      --  the parameters to add to the request
+    '''
+    access_token, api_server = get_access_data()
+    headers = {'Authorization': 'Bearer {}'.format(access_token)}
+    r = requests.post(api_server + endpoint, headers=headers, params=params)
+    return r.json()
+
+def do_delete(endpoint, params={}):
+    ''' Performs a DELETE request to the Questrade API.
+
+    Arguments:
+    endpoint    --  the webservice endpoint te request is sent to.
+    params      --  the parameters to add to the request
+    '''
+    access_token, api_server = get_access_data()
+    headers = {'Authorization': 'Bearer {}'.format(access_token)}
+    r = requests.delete(api_server + endpoint, headers=headers, params=params)
+    return r.json()
+
 
 def add_local_tz(date):
     ''' Add the local time zone to the given date and returns a new date.
@@ -56,3 +89,56 @@ def add_local_tz(date):
     '''
     tz = get_localzone()
     return tz.fromutc(date.replace(tzinfo=tz))
+
+def create_option_id_filter(option_type, underlying_id, expiry_date, 
+                            min_strike_price, max_strike_price):
+    ''' Simple utility function to generate an OptionIdFilter structure as 
+    required by the GET markets/quotes/options API call.
+
+    Arguments:
+    option_type (enum)          --  Option type
+    underlying_id (int)         --  Underlying ID
+    expiry_date (datetime)      --  Expiry date
+    min_strike_price (double)   --  Min strike price
+    max_strike_price (double)   --  Max strike price
+    '''
+    option_id_filter = {
+        'optionType': option_type,
+        'underlyingId': underlying_id,
+        'expiry_date': expiry_date,
+        'minStrikePrice': min_strike_price,
+        'maxStrikePrice': maxStrikePrice
+    }
+    return option_id_filter
+
+def create_strategy_variant_request(variant_id, strategy, legs):
+    ''' Simple utility function to generate a StrategyVariantRequest structure
+    as required by the Get markets/quotes/strategies API call.
+
+    Arguments:
+    variant_id (int)    --  Variant ID
+    strategy (enum)     --  Strategy type 
+    legs (dic list)     --  Array of Strategy legs
+    '''
+    strategy_variant_request = {
+        'variantId': variant_id,
+        'strategy': strategy,
+        'legs': legs
+    }
+    return strategy_variant_request
+
+def create_strategy_variant_leg(symbol_id, action, ratio):
+    ''' Simple utility function to generate a StrategyVariantLeg structure as
+    required by the StrategyVariantRequest structure.
+
+    Arguments:
+    symbolId (int)  --  Internal symbol identifier
+    action (enum)   --  Order side
+    ratio (int)     --  Numeric ration of the leg strategy
+    '''
+    strategy_variant_leg = {
+        'symbolId': symbol_id,
+        'acton': action,
+        'ratio': ratio
+    }
+    return strategy_variant_leg

@@ -4,4 +4,7 @@ This package is a Python wrapper for the Questrade API.
 ## Under construction
 
 ## TODO
-- mechanism to verify access token validity before redeeming refresh token
+- Test from def_searchs
+- Implement unit tests
+- Define and document the different enumeration values.
+- Access expiry buffer? 
