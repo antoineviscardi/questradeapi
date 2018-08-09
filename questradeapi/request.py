@@ -106,7 +106,7 @@ def get_symbols(names=None, ids=None, id=None):
 		endpoint += '/' + str(id)
 	return utils.do_get(endpoint, params)
 
-def search(prefix, offset=None):
+def get_symbols_search(prefix, offset=None):
 	''' Retrieves symbol(s) using several search criteria.
 
 	Arguments:
@@ -157,13 +157,16 @@ def get_quotes_options(filters=None, ids=None):
 	ids (int list)		--	Array of option IDs
 
 	OptionIdFilter structures:
-	optionType (list)		--	Option type
+	optionType (enum)		--	Option type
 	underlyingId (int)		--	Underlying ID
 	expiryDate (datetime)	--	Expiry date
 	minstrikePrice (double)	--	Min strike price
 	maxstrikePrice (double)	--	Max strike price
 	'''
-	pass
+	params = {}
+	params.update({'optionIds': ids})
+	params.update({'filters': filters})
+	return utils.do_get('v1/markets/quotes/options', params)
 
 def get_quotes_strategies(variants):
 	'''Retrieve a calculated L1 market data quote for a single or many multi-leg
@@ -182,7 +185,8 @@ def get_quotes_strategies(variants):
 	action (enum)	--	Order side
 	ratio (int)		--	Numeric ration of the leg strategy
 	'''
-	pass
+	params = {'variants': variants}
+	return utils.do_get('v1/markets/quotes/strategies', params)
 
 def get_candles(id, start_time, end_time, interval):
 	'''Retrieves historical market data in the form of OHLC candlesticks for a 

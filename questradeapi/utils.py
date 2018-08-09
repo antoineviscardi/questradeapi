@@ -45,7 +45,7 @@ def redeem_refresh_token(refresh_token):
     return json_data
 
 def do_get(endpoint, params={}):
-    ''' Performs a get request to the Questrade API.
+    ''' Performs a GET request to the Questrade API.
 
     Arguments:
     endpoint    --  the webservice endpoint te request is sent to.
@@ -56,6 +56,31 @@ def do_get(endpoint, params={}):
     r = requests.get(api_server + endpoint, headers=headers, params=params)
     return r.json()
 
+def do_post(endpoint, params={}):
+    ''' Performs a POST request to the Questrade API.
+
+    Arguments:
+    endpoint    --  the webservice endpoint te request is sent to.
+    params      --  the parameters to add to the request
+    '''
+    access_token, api_server = get_access_data()
+    headers = {'Authorization': 'Bearer {}'.format(access_token)}
+    r = requests.post(api_server + endpoint, headers=headers, params=params)
+    return r.json()
+
+def do_delete(endpoint, params={}):
+    ''' Performs a DELETE request to the Questrade API.
+
+    Arguments:
+    endpoint    --  the webservice endpoint te request is sent to.
+    params      --  the parameters to add to the request
+    '''
+    access_token, api_server = get_access_data()
+    headers = {'Authorization': 'Bearer {}'.format(access_token)}
+    r = requests.delete(api_server + endpoint, headers=headers, params=params)
+    return r.json()
+
+
 def add_local_tz(date):
     ''' Add the local time zone to the given date and returns a new date.
 
@@ -64,3 +89,56 @@ def add_local_tz(date):
     '''
     tz = get_localzone()
     return tz.fromutc(date.replace(tzinfo=tz))
+
+def create_option_id_filter(option_type, underlying_id, expiry_date, 
+                            min_strike_price, max_strike_price):
+    ''' Simple utility function to generate an OptionIdFilter structure as 
+    required by the GET markets/quotes/options API call.
+
+    Arguments:
+    option_type (enum)          --  Option type
+    underlying_id (int)         --  Underlying ID
+    expiry_date (datetime)      --  Expiry date
+    min_strike_price (double)   --  Min strike price
+    max_strike_price (double)   --  Max strike price
+    '''
+    option_id_filter = {
+        'optionType': option_type,
+        'underlyingId': underlying_id,
+        'expiry_date': expiry_date,
+        'minStrikePrice': min_strike_price,
+        'maxStrikePrice': maxStrikePrice
+    }
+    return option_id_filter
+
+def create_strategy_variant_request(variant_id, strategy, legs):
+    ''' Simple utility function to generate a StrategyVariantRequest structure
+    as required by the Get markets/quotes/strategies API call.
+
+    Arguments:
+    variant_id (int)    --  Variant ID
+    strategy (enum)     --  Strategy type 
+    legs (dic list)     --  Array of Strategy legs
+    '''
+    strategy_variant_request = {
+        'variantId': variant_id,
+        'strategy': strategy,
+        'legs': legs
+    }
+    return strategy_variant_request
+
+def create_strategy_variant_leg(symbol_id, action, ratio):
+    ''' Simple utility function to generate a StrategyVariantLeg structure as
+    required by the StrategyVariantRequest structure.
+
+    Arguments:
+    symbolId (int)  --  Internal symbol identifier
+    action (enum)   --  Order side
+    ratio (int)     --  Numeric ration of the leg strategy
+    '''
+    strategy_variant_leg = {
+        'symbolId': symbol_id,
+        'acton': action,
+        'ratio': ratio
+    }
+    return strategy_variant_leg
