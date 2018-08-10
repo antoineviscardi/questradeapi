@@ -189,7 +189,7 @@ def get_quotes_strategies(variants):
 	return utils.do_get('v1/markets/quotes/strategies', params)
 
 def get_candles(id, start_time, end_time, interval):
-	'''Retrieves historical market data in the form of OHLC candlesticks for a 
+	''' Retrieves historical market data in the form of OHLC candlesticks for a 
 	specified symbol. This call is limited to returning 2,000 candlesticks in
 	a single response.
 
@@ -205,6 +205,135 @@ def get_candles(id, start_time, end_time, interval):
 		'interval': interval
 	}
 	return utils.do_get('v1/markets/candles/{}'.format(id), params)
+
+def post_order(account_id, symbol_id, quantity, iceberg_quantity, limit_price,
+			   stop_price, all_or_none, anonymous, order_type, time_in_force,
+			   action, primary_route, secondary_route, order_id=None, 
+			   impact=False):
+	''' Allows to place/replace or estimate the impact of an order against a 
+	certain account.
+
+	Arguments:
+	id (String)				--	Account number against which the order is 
+								submited
+	order_id (int)			--	Order id of the order to be replaced
+	symbol_id (int)			--	Internal symbol identifier
+	quantity (int)			--	Order quantity
+	iceberg_quantity (int)	-- 	Iceberg instruction quantity
+	limit_price (double)	--	Limit price
+	stop_price (double)		--	stop_price
+	all_or_none (bool)		--	Whether all are none is enabled
+	anonymous (bool)		--	Wheter anonymous is enabled
+	order_type (enum)		--	Order type
+	time_in_force (enum)	--	Time-In-Force
+	action (enum)			--	Order side
+	primary_route (enum)	--	Primary route order
+	secondary_route (enum)	--	Secondary order route
+	impact (bool)			--	Calculate impact instead of placing order
+	'''
+	endpoint = 'v1/accounts/{}/orders'.format(account_id)
+	if order_id:
+		endpoint += '/' + str(order_id)
+	if impact:
+		endpoint += '/impact'
+	params = {
+		'symbolId': symbol_id,
+		'quantity': quantity,
+		'icebergQuantity': iceberg_quantity,
+		'limitPrice': limit_price,
+		'stopPrice': stop_price,
+		'isAllOrNone': all_or_none,
+		'isAnonymous': anonymous,
+		'orderType': order_type,
+		'timeInForce': time_in_force,
+		'action': action,
+		'primaryRoute': primary_route,
+		'secondary_route': secondary_route
+	}
+	return utils.do_post(endpoint, params)
+
+def delete_order(account_id, order_id):
+	''' Allows to cancel an existing order.
+
+	Arguments:
+	account_id (String)	--	Account number
+	order_id (Integer)	--	Internal identifier of the order
+	'''
+	endpoint = 'v1/accounts/{}/order/{}'.format(account_id, order_id)
+	return utils.do_delete(endpoint)
+
+def post_bracket_order(account_id, symbol_id, primary_route, secondary_route, 
+					   components, impact=False):
+	''' Allows to place/replace or estimate the impact of a bracket order
+	against a certain account.
+
+	Arguments:
+	account_id (String)		--	Account number
+	symbol_id (int)			--	Internal symbol identifier
+	primary_route (enum)	--	Primary order route
+	secondary_route (enum)	-- 	Secondary order route
+	components (dic list)	--	List of Bracket Order Components
+	impact (bool)			--	Calculate impact instead of placing order
+
+	Bracket Order Components:
+	orderId (int)		--	Order ID of active order, or 0 for new order
+	quantity (double)	--	Order quantity
+	action (enum)		--	Order side
+	limitPrice (double)	--	Limit price
+	stopPrice (double)	--	Stop price
+	orderType (enum)	--	Order type
+	timeInForce (enum)	--	Order duration
+	orderClass (enum)	--	Type of component
+	'''
+	endpoint = 'v1/accounts/{}/orders/bracket'.format(account_id)
+	if impact:
+		endpoint += '/impact'
+	params={
+		'symbolId': symbol_id,
+		'primaryRoute': primary_route,
+		'secondaryRoute': secondary_route,
+		'components': components
+	}
+	return utils.do_post('v1/accounts/{}/orders/bracket', params)
+
+def post_multi_leg_strategy_order(account_id, symbol_id, limit_price, 
+								  order_type, time_in_force, primary_route, 
+								  secondary_route, legs, strategy, 
+								  impact=False):
+	''' Allows to place/replace or estimate the impact of a multi-leg strategy 
+	against a certain account.
+
+	Arguments:
+	account_id (String)		--	Account number
+	symbol_id (int)			--	Internal symbol identifier
+	limitPrice (double)		--	Limit price
+	orderType (enum)		--	Order type
+	timeInForce (enum)		--	Order duration
+	primary_route (enum)	--	Primary order route
+	secondary_route (enum)	-- 	Secondary order route
+	legs (dict list)		-- 	Array of InsertOrderLegData structures
+	strategy (enum)			--	Strategy type
+	impact (bool)			--	Calculate impact instead of placing order
+	
+	InsertOrderLegData:
+	symbolId (int)		--	Internal symbol identifier
+	action (enum)		--	Leg action
+	legQuantity (int)	--	Leg quantity
+	'''
+	endpoint = '/v1/accounts/{}/orders/strategy'.format(account_id)
+	if impact:
+		endpoint += '/impact'
+	params = {
+		'symbolId': symbol_id,
+		'limitPrice': limit_price,
+		'orderType': order_type,
+		'timeInForce': time_in_force,
+		'primaryRoute': primary_route,
+		'secondaryRoute': secondary_route,
+		'legs': legs,
+		'strategy': strategy
+	}
+	return utils.do_post(endpoint, params)
 
 '''
 DEV TESTING

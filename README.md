@@ -7,4 +7,5 @@ This package is a Python wrapper for the Questrade API.
 - Test from def_searchs
 - Implement unit tests
 - Define and document the different enumeration values.
+- default values for enums?
 - Access expiry buffer? 
