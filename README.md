@@ -12,6 +12,9 @@ This package is a Python wrapper for the [Questrade API][api].
 
 ## Installation
 ### pip
+```
+pip install questradeqpi
+```
 
 ## Usage
 
@@ -22,4 +25,4 @@ I you find a bug, have a feature request, or have design suggestions, please do 
 [Antoine Viscardi][avis]
 
 [api]: https://www.questrade.com/api/documentation/getting-started
-[avis]: https://www.antoineviscardi.github.io
+[avis]: https://antoineviscardi.github.io
