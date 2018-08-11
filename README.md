@@ -22,4 +22,4 @@ I you find a bug, have a feature request, or have design suggestions, please do 
 [Antoine Viscardi][avis]
 
 [1](https://www.questrade.com/api/documentation/getting-started)
-[avis][antoineviscardi.github.io]
+[avis](antoineviscardi.github.io)
