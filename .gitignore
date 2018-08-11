@@ -1,4 +1,4 @@
-token.txt
+token.json
 build/
 dist/
 *.egg-info
