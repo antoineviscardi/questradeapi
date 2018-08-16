@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='questradeapi',
-    version='0.0.2',
+    version='0.0.8',
     author='Antoine Viscardi',
     author_email='antoine.viscardi@gmail.com',
     description='Python wrapper for the Questrade API',
@@ -18,5 +18,9 @@ setuptools.setup(
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',    
+    ),
+    install_requires=(
+        'requests',
+        'tzlocal',
     ),
 )

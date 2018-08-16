@@ -1,0 +1,688 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API &mdash; questradeapi   documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="TODOs" href="todos.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> questradeapi
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.8
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todos.html">TODOs</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">questradeapi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-questradeapi">
+<span id="api"></span><h1>API<a class="headerlink" href="#module-questradeapi" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="questradeapi.Session">
+<em class="property">class </em><code class="descclassname">questradeapi.</code><code class="descname">Session</code><span class="sig-paren">(</span><em>refresh_token</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session" title="Permalink to this definition">¶</a></dt>
+<dd><p>A QuestradeAPI session. It contains information that allows to send
+requests to the Questrade API.</p>
+<dl class="method">
+<dt id="questradeapi.Session.get_access_data">
+<code class="descname">get_access_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_access_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the data required to access the server, namely a access token
+and the api server’s address in a tuple.</p>
+<p>If the access token is expired, the refresh token is redeemed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.redeem_refresh_token">
+<code class="descname">redeem_refresh_token</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.redeem_refresh_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redeems the given refresh token to the questrade login server and
+returnes the received data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.do_get">
+<code class="descname">do_get</code><span class="sig-paren">(</span><em>endpoint</em>, <em>params={}</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.do_get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a GET request to the Questrade API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>endpoint</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – The webservice endpoint te request is sent to.</li>
+<li><strong>params</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>, optional) – The parameters to include in the request.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.do_post">
+<code class="descname">do_post</code><span class="sig-paren">(</span><em>endpoint</em>, <em>params={}</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.do_post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a POST request to the Questrade API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>endpoint</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – The webservice endpoint te request is sent to.</li>
+<li><strong>params</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>, optional) – The parameters to include in the request.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.do_delete">
+<code class="descname">do_delete</code><span class="sig-paren">(</span><em>endpoint</em>, <em>params={}</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.do_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a DELETE request to the Questrade API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>endpoint</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – The webservice endpoint te request is sent to.</li>
+<li><strong>params</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>, optional) – The parameters to include in the request.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_time">
+<code class="descname">get_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve current server time.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_accounts">
+<code class="descname">get_accounts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_accounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the accounts associated with the user on behalf of which
+the API client is authorized.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_positions">
+<code class="descname">get_positions</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_positions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrives positions in a specified account.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Account number</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_balances">
+<code class="descname">get_balances</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_balances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves per-currency and combined balances for a specified account.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Account number</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_executions">
+<code class="descname">get_executions</code><span class="sig-paren">(</span><em>id</em>, <em>start_time=None</em>, <em>end_time=None</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_executions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves executions for a specific account.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Account number</li>
+<li><strong>start_time</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime</span></code>, optional) – Start of the time range. Defaults to today 00:00am.</li>
+<li><strong>end_time</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime</span></code>, optional) – End of the time range. Defaults to todat 11:59pm.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_orders">
+<code class="descname">get_orders</code><span class="sig-paren">(</span><em>id</em>, <em>state_filter=None</em>, <em>start_time=None</em>, <em>end_time=None</em>, <em>order_ids=None</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_orders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves orders for a specified account.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Account number</li>
+<li><strong>state_filter</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – ‘All’, ‘Open’ or ‘Closed’. Retreive all, active or closed orders.
+Defaults to ‘All’.</li>
+<li><strong>start_time</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime</span></code>, optional) – Start of the time range. Defaults to today 00:00am.</li>
+<li><strong>end_time</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime</span></code>, optional) – End of the time range. Defaults to todat 11:59pm.</li>
+<li><strong>order_ids</strong> (<em>int</em><em>, </em><em>optional</em>) – Retrieve specific orders details.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_activities">
+<code class="descname">get_activities</code><span class="sig-paren">(</span><em>id</em>, <em>start_time=None</em>, <em>end_time=None</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_activities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve account activities, including cash transactons, dividends,
+trades, etc.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Account number.</li>
+<li><strong>start_time</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime</span></code>, optional) – Start of the time range. Defaults to today 12:00am.</li>
+<li><strong>end_time</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">endtime</span></code>, optional) – End of the time range Defaults to today 11:59pm.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_symbols">
+<code class="descname">get_symbols</code><span class="sig-paren">(</span><em>ids=None</em>, <em>id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_symbols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves detailed information about one or more symbol.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – List of symbol names.</li>
+<li><strong>ids</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – List of symbol ids.</li>
+<li><strong>id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Internal symbol identifier. Mutually exclusive with ‘ids’ parameter.</li>
+<li><strong>list of names</strong><strong> or </strong><strong>ids can be specified</strong><strong>, </strong><strong>but not both. If 'names'</strong> (<em>Either</em>) – </li>
+<li><strong>specified</strong><strong>, </strong><strong>it takes precedence over 'ids'</strong><strong>, </strong><strong>which takes precedence</strong> (<em>is</em>) – </li>
+<li><strong>'id'.</strong> (<em>over</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_symbols_search">
+<code class="descname">get_symbols_search</code><span class="sig-paren">(</span><em>prefix</em>, <em>offset=None</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_symbols_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves symbol(s) using several search criteria.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>prefix</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Prefix of a symbol or any word in the description.</li>
+<li><strong>offset</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Offset in number of records from the beginning of a result set.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_option_chain">
+<code class="descname">get_option_chain</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_option_chain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves an option chain for a particular underlying symbol.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Internal symbol identifier.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_markets">
+<code class="descname">get_markets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_markets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves information about supported markets.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_quotes">
+<code class="descname">get_quotes</code><span class="sig-paren">(</span><em>id=None</em>, <em>ids=None</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_quotes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a single Level 1 market data quote for one or more symbols.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Internal symbol identifier (mutually exclusive with ‘ids’ argument).</li>
+<li><strong>ids</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – List of symbol ids.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_quotes_options">
+<code class="descname">get_quotes_options</code><span class="sig-paren">(</span><em>filters=None</em>, <em>ids=None</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_quotes_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a single Level 1 market data quote and Greek data for one or
+more option symbols.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Add link to description of OptionIdFilter and util to create it.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filters</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>) – List of OptionIdFilter structures.</li>
+<li><strong>ids</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – List of option IDs.</li>
+<li><strong>structures</strong> (<em>OptionIdFilter</em>) – </li>
+<li><strong>(</strong><strong>enum</strong><strong>)       </strong><strong>--  Option type</strong> (<em>optionType</em>) – </li>
+<li><strong>(</strong><strong>int</strong><strong>)      </strong><strong>--  Underlying ID</strong> (<em>underlyingId</em>) – </li>
+<li><strong>(</strong><strong>datetime</strong><strong>)   </strong><strong>--  Expiry date</strong> (<em>expiryDate</em>) – </li>
+<li><strong>(</strong><strong>double</strong><strong>) </strong><strong>--  Min strike price</strong> (<em>minstrikePrice</em>) – </li>
+<li><strong>(</strong><strong>double</strong><strong>) </strong><strong>--  Max strike price</strong> (<em>maxstrikePrice</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_quotes_strategies">
+<code class="descname">get_quotes_strategies</code><span class="sig-paren">(</span><em>variants</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_quotes_strategies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a calculated L1 market data quote for a single or many multi-leg
+strategies.</p>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">Add link to description of StrategyVariantRequest and StrategyLeg
+and utils to create them.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variants</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>) – Array of Strategy Variants.</li>
+<li><strong>StrategyVariantRequest</strong> – </li>
+<li><strong>(</strong><strong>int</strong><strong>) </strong><strong>--  Variant ID</strong> (<em>variantId</em>) – </li>
+<li><strong>(</strong><strong>enum</strong><strong>) </strong><strong>--  Strategy type</strong> (<em>strategy</em>) – </li>
+<li><strong>(</strong><strong>dic list</strong><strong>) </strong><strong>--  Array of Strategy legs</strong> (<em>legs</em>) – </li>
+<li><strong>StrategyLeg</strong> – </li>
+<li><strong>(</strong><strong>int</strong><strong>)  </strong><strong>--  Internal symbol identifier</strong> (<em>symbolId</em>) – </li>
+<li><strong>(</strong><strong>enum</strong><strong>)   </strong><strong>--  Order side</strong> (<em>action</em>) – </li>
+<li><strong>(</strong><strong>int</strong><strong>)     </strong><strong>--  Numeric ration of the leg strategy</strong> (<em>ratio</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.get_candles">
+<code class="descname">get_candles</code><span class="sig-paren">(</span><em>id</em>, <em>start_time</em>, <em>end_time</em>, <em>interval</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.get_candles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves historical market data in the form of OHLC candlesticks for a
+specified symbol. This call is limited to returning 2,000 candlesticks in
+a single response.</p>
+<div class="admonition-todo admonition" id="index-2">
+<p class="first admonition-title">Todo</p>
+<p class="last">Add link to interval allowed values.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Internal symbol indentifier.</li>
+<li><strong>startTime</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime</span></code>) – Beginning of the candlestick range.</li>
+<li><strong>endTime</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime</span></code>) – End of the candlestick range.</li>
+<li><strong>interval</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Interval of a single candlestick. Allowed values:</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.post_order">
+<code class="descname">post_order</code><span class="sig-paren">(</span><em>account_id</em>, <em>symbol_id</em>, <em>quantity</em>, <em>iceberg_quantity</em>, <em>limit_price</em>, <em>stop_price</em>, <em>all_or_none</em>, <em>anonymous</em>, <em>order_type</em>, <em>time_in_force</em>, <em>action</em>, <em>primary_route</em>, <em>secondary_route</em>, <em>order_id=None</em>, <em>impact=False</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.post_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows to place/replace or estimate the impact of an order against a
+certain account.</p>
+<div class="admonition-todo admonition" id="index-3">
+<p class="first admonition-title">Todo</p>
+<p class="last">Link to allowed values for order_type, time_in_force, action,
+primary_route and secondary_route.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Account number against which the order is submited.</li>
+<li><strong>order_id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Order id of the order to be replaced.</li>
+<li><strong>symbol_id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Internal symbol identifier.</li>
+<li><strong>quantity</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Order quantity.</li>
+<li><strong>iceberg_quantity</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Iceberg instruction quantity.</li>
+<li><strong>limit_price</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">double</span></code>) – Limit price.</li>
+<li><strong>stop_price</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">double</span></code>) – Stop price.</li>
+<li><strong>all_or_none</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – Whether all are none is enabled.</li>
+<li><strong>anonymous</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – Wheter anonymous is enabled.</li>
+<li><strong>order_type</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Order type.</li>
+<li><strong>time_in_force</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Time-In-Force.</li>
+<li><strong>action</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Order side.</li>
+<li><strong>primary_route</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Primary route order.</li>
+<li><strong>secondary_route</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Secondary order route.</li>
+<li><strong>impact</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – Calculate impact instead of placing order.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.delete_order">
+<code class="descname">delete_order</code><span class="sig-paren">(</span><em>order_id</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.delete_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows to cancel an existing order.</p>
+<p>Arguments:
+account_id (String) –  Account number
+order_id (Integer)  –  Internal identifier of the order</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.post_bracket_order">
+<code class="descname">post_bracket_order</code><span class="sig-paren">(</span><em>account_id</em>, <em>symbol_id</em>, <em>primary_route</em>, <em>secondary_route</em>, <em>components</em>, <em>impact=False</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.post_bracket_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows to place/replace or estimate the impact of a bracket order
+against a certain account.</p>
+<div class="admonition-todo admonition" id="index-4">
+<p class="first admonition-title">Todo</p>
+<p class="last">Link to link to BracketOrderComponent structure and util to create
+it.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>account_id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Account number.</li>
+<li><strong>symbol_id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Internal symbol identifier.</li>
+<li><strong>primary_route</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Primary order route.</li>
+<li><strong>secondary_route</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Secondary order route.</li>
+<li><strong>components</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>) – List of Bracket Order Components.</li>
+<li><strong>impact</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – Calculate impact instead of placing order.</li>
+<li><strong>Order Components</strong> (<em>Bracket</em>) – </li>
+<li><strong>(</strong><strong>int</strong><strong>)       </strong><strong>--  Order ID of active order</strong><strong>, or </strong><strong>0 for new order</strong> (<em>orderId</em>) – </li>
+<li><strong>(</strong><strong>double</strong><strong>)   </strong><strong>--  Order quantity</strong> (<em>quantity</em>) – </li>
+<li><strong>(</strong><strong>enum</strong><strong>)       </strong><strong>--  Order side</strong> (<em>action</em>) – </li>
+<li><strong>(</strong><strong>double</strong><strong>) </strong><strong>--  Limit price</strong> (<em>limitPrice</em>) – </li>
+<li><strong>(</strong><strong>double</strong><strong>)  </strong><strong>--  Stop price</strong> (<em>stopPrice</em>) – </li>
+<li><strong>(</strong><strong>enum</strong><strong>)    </strong><strong>--  Order type</strong> (<em>orderType</em>) – </li>
+<li><strong>(</strong><strong>enum</strong><strong>)  </strong><strong>--  Order duration</strong> (<em>timeInForce</em>) – </li>
+<li><strong>(</strong><strong>enum</strong><strong>)   </strong><strong>--  Type of component</strong> (<em>orderClass</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="questradeapi.Session.post_multi_leg_strategy_order">
+<code class="descname">post_multi_leg_strategy_order</code><span class="sig-paren">(</span><em>account_id</em>, <em>symbol_id</em>, <em>limit_price</em>, <em>order_type</em>, <em>time_in_force</em>, <em>primary_route</em>, <em>secondary_route</em>, <em>legs</em>, <em>strategy</em>, <em>impact=False</em><span class="sig-paren">)</span><a class="headerlink" href="#questradeapi.Session.post_multi_leg_strategy_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows to place/replace or estimate the impact of a multi-leg strategy
+against a certain account.</p>
+<div class="admonition-todo admonition" id="index-5">
+<p class="first admonition-title">Todo</p>
+<p class="last">Link to InsertOrderLegData structure and util to create it.</p>
+</div>
+<div class="admonition-todo admonition" id="index-6">
+<p class="first admonition-title">Todo</p>
+<p class="last">Link to allowed values for orderType, time_in_force, primary_route,
+scondary_route and strategy enums.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>account_id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Account number.</li>
+<li><strong>symbol_id</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) – Internal symbol identifier.</li>
+<li><strong>limitPrice</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">double</span></code>) – Limit price.</li>
+<li><strong>orderType</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Order type.</li>
+<li><strong>time_in_force</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Order duration.</li>
+<li><strong>primary_route</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Primary order route.</li>
+<li><strong>secondary_route</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Secondary order route.</li>
+<li><strong>legs</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>) – Array of InsertOrderLegData structures.</li>
+<li><strong>strategy</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Strategy type.</li>
+<li><strong>impact</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – Calculate impact instead of placing order.</li>
+<li><strong>InsertOrderLegData</strong> – </li>
+<li><strong>(</strong><strong>int</strong><strong>)      </strong><strong>--  Internal symbol identifier</strong> (<em>symbolId</em>) – </li>
+<li><strong>(</strong><strong>enum</strong><strong>)       </strong><strong>--  Leg action</strong> (<em>action</em>) – </li>
+<li><strong>(</strong><strong>int</strong><strong>)   </strong><strong>--  Leg quantity</strong> (<em>legQuantity</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="todos.html" class="btn btn-neutral float-right" title="TODOs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Antoine Viscardi.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:' ',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
