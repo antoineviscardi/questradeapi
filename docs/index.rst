@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to questradeapi's documentation!
+Welcome to QuestradeAPI's documentation!
 ========================================
 
 .. toctree::
@@ -11,7 +11,9 @@ Welcome to questradeapi's documentation!
     :caption: Contents:
 
     installation
+    quickstart
     api
+    datastructures
     todos
 
 

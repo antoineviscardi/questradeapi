@@ -112,12 +112,22 @@ class Session():
     def get_time(self):
         '''Retrieve current server time.
 
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
+
         '''
         return self.do_get('v1/time')
 
     def get_accounts(self):
         '''Retrieves the accounts associated with the user on behalf of which 
         the API client is authorized.
+
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
 
         '''
         return self.do_get('v1/accounts')
@@ -130,6 +140,11 @@ class Session():
         id : :obj:`str`
             Account number
 
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
+
         '''
         return self.do_get('v1/accounts/{}/positions'.format(id))
 
@@ -140,6 +155,11 @@ class Session():
         ----------
         id : :obj:`str`
             Account number
+
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
 
         '''
         return self.do_get('v1/accounts/{}/balances'.format(id))
@@ -155,6 +175,11 @@ class Session():
             Start of the time range. Defaults to today 00:00am.
         end_time : :obj:`datetime`, optional
             End of the time range. Defaults to todat 11:59pm.
+
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
 
         '''
         params = {}
@@ -182,6 +207,11 @@ class Session():
         order_ids : int, optional
             Retrieve specific orders details.
 
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
+
         '''
         params={}
         if start_time:
@@ -207,6 +237,11 @@ class Session():
         end_time : :obj:`endtime`, optional
             End of the time range Defaults to today 11:59pm.
 
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
+
         '''
         params={}
         if start_time:
@@ -226,6 +261,11 @@ class Session():
             List of symbol ids.
         id : :obj:`int`
             Internal symbol identifier. Mutually exclusive with 'ids' parameter.
+
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
 
         Either list of names or ids can be specified, but not both. If 'names' 
         is specified, it takes precedence over 'ids', which takes precedence 
@@ -255,6 +295,11 @@ class Session():
         offset : :obj:`int`
             Offset in number of records from the beginning of a result set.
 
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
+
         '''
         params={'prefix': prefix}
         if offset:
@@ -275,6 +320,11 @@ class Session():
     def get_markets(self):
         '''Retrieves information about supported markets.
 
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
+
         '''
         return self.do_get('v1/markets')
 
@@ -287,6 +337,11 @@ class Session():
             Internal symbol identifier (mutually exclusive with 'ids' argument).
         ids : :obj:`list` of :obj:`int`
             List of symbol ids.
+
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
 
         '''
         endpoint = 'v1/markets/quotes'
@@ -310,6 +365,11 @@ class Session():
             List of OptionIdFilter structures.
         ids : :obj:`list` of :obj:`int`
             List of option IDs.
+
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
 
         OptionIdFilter structures:
         optionType (enum)       --  Option type
@@ -336,6 +396,11 @@ class Session():
         ----------
         variants : :obj:`list` of :obj:`dict`
             Array of Strategy Variants.
+
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
 
         StrategyVariantRequest:
         variantId (int) --  Variant ID
@@ -369,6 +434,11 @@ class Session():
             End of the candlestick range.
         interval : :obj:`str`
             Interval of a single candlestick. Allowed values: 
+
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
 
         '''
         params = {
@@ -422,6 +492,11 @@ class Session():
         impact : :obj:`bool`
             Calculate impact instead of placing order.
 
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
+
         '''
         endpoint = 'v1/accounts/{}/orders'.format(account_id)
         if order_id:
@@ -447,9 +522,17 @@ class Session():
     def delete_order(account_id, order_id):
         ''' Allows to cancel an existing order.
 
-        Arguments:
-        account_id (String) --  Account number
-        order_id (Integer)  --  Internal identifier of the order
+        Arguments
+        ---------
+        account_id : :obj:`str`
+            Account number.
+        order_id : :obj:`int`
+            Internal identifier of the order.
+
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
 
         '''
         endpoint = 'v1/accounts/{}/order/{}'.format(account_id, order_id)
@@ -478,6 +561,11 @@ class Session():
             List of Bracket Order Components.
         impact : :obj:`bool`
             Calculate impact instead of placing order.
+
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
 
         Bracket Order Components:
         orderId (int)       --  Order ID of active order, or 0 for new order
@@ -536,6 +624,11 @@ class Session():
             Strategy type.
         impact : :obj:`bool`
             Calculate impact instead of placing order.
+
+        Returns
+        -------
+        :obj:`dict`
+            Dictionary containing the response properties.
         
         InsertOrderLegData:
         symbolId (int)      --  Internal symbol identifier
