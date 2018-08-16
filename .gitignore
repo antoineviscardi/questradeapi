@@ -2,3 +2,7 @@ token.json
 build/
 dist/
 *.egg-info
+
+_build
+_static
+_templates

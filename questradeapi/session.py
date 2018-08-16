@@ -298,8 +298,8 @@ class Session():
             return self.do_get(endpoint, params)
 
     def get_quotes_options(self, filters=None, ids=None):
-        ''' Retrieves a single Level 1 market data quote and Greek data for one or
-        more option symbols.
+        ''' Retrieves a single Level 1 market data quote and Greek data for one 
+        or more option symbols.
 
         .. todo::
             Add link to description of OptionIdFilter and util to create it.
@@ -325,8 +325,8 @@ class Session():
         return self.do_get('v1/markets/quotes/options', params)
 
     def get_quotes_strategies(self, variants):
-        '''Retrieve a calculated L1 market data quote for a single or many multi-leg
-        strategies.
+        '''Retrieve a calculated L1 market data quote for a single or many 
+        multi-leg strategies.
         
         .. todo::
             Add link to description of StrategyVariantRequest and StrategyLeg
