@@ -1,5 +1,5 @@
 # Questrade API Wrapper
-This package is a Python wrapper for the [Questrade API][https://www.questrade.com/api].
+This package is a Python wrapper for the [Questrade API](https://www.questrade.com/api).
 
 ## Installation
 To install QuestradeAPI, you can use **pipenv** (or **pip**, of course):
