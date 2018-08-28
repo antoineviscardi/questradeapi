@@ -1,5 +1,7 @@
+.. _data-structures:
+
 Data Structures
 ===============
 
-.. todo::
-	Add autodoc of utility methods.
+.. automodule:: questradeapi.utils
+	:members:

@@ -9,10 +9,9 @@ Some API calls' parameters only accept specific string values. A list of those e
 
 Data Structures
 ---------------
-Some API calls' parameters requires :obj:`dict` of a specific structure to be passed. These data structures and utility methods to create them are documented in the Data Structures section.
+Some API calls' parameters requires :obj:`dict` of a specific structure to be passed. These data structures and utility methods to create them are documented in the :ref:`data-structures` section.
 
-.. todo:: 
-	Add link to Data Structures sesction.
+
 
 .. module:: questradeapi
 

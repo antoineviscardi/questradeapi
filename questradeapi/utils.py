@@ -3,23 +3,48 @@ from tzlocal import get_localzone
 def add_local_tz(date):
     ''' Add the local time zone to the given date and returns a new date.
 
-    Arguments:
-    date -- a datetime object
+    Parameters
+    ----------
+    date : :obj:`datetime`
+        Date to which to adjust with the local time zone.
+
+    Returns
+    -------
+    :obj:`datetime`
+        Date adjusted with local timezone.
+  
     '''
     tz = get_localzone()
     return tz.fromutc(date.replace(tzinfo=tz))
 
 def create_option_id_filter(option_type, underlying_id, expiry_date, 
                             min_strike_price, max_strike_price):
-    ''' Simple utility function to generate an OptionIdFilter structure as 
-    required by the GET markets/quotes/options API call.
+    ''' Simple utility to generate an OptionIdFilter structure.
 
-    Arguments:
-    option_type (enum)          --  Option type
-    underlying_id (int)         --  Underlying ID
-    expiry_date (datetime)      --  Expiry date
-    min_strike_price (double)   --  Min strike price
-    max_strike_price (double)   --  Max strike price
+    Parameters
+    ----------
+    option_type : :obj:`str`, {'Call', 'Put'}
+        Option type.
+    underlying_id : :obj:`int`
+        Underlying ID.
+    expiry_date : :obj:`datetime`
+        Expiry date.
+    min_strike_price : :obj:`double`
+        Min strike price.
+    max_strike_price : :obj:`double`
+        Max strike price.
+
+    Note
+    ----
+    More details on allowed `option_type` values can be found `here 
+    <https://www.questrade.com/api/documentation/rest-operations/enumerat \
+    ions/enumerations#option-type>`__.
+
+    Returns
+    -------
+    :obj:`dict`
+        OptionIdFilter structure.
+
     '''
     option_id_filter = {
         'optionType': option_type,
@@ -31,13 +56,32 @@ def create_option_id_filter(option_type, underlying_id, expiry_date,
     return option_id_filter
 
 def create_strategy_variant_request(variant_id, strategy, legs):
-    ''' Simple utility function to generate a StrategyVariantRequest structure
-    as required by the Get markets/quotes/strategies API call.
+    ''' Simple utility to generate a StrategyVariantRequest structure.
 
-    Arguments:
-    variant_id (int)    --  Variant ID
-    strategy (enum)     --  Strategy type 
-    legs (dic list)     --  Array of Strategy legs
+    Parameters
+    ----------
+    variant_id : :obj:`int`
+        Variant ID.
+    strategy : :obj:`str`, {'CoveredCall', 'MarriedPuts', \
+    'VerticalCallSpread', 'VerticalPutSpread', 'CalendarCallSpread', \
+    'CalendarPutSpread', 'DiagonalCallSpread', 'DiagonalPutSpread', 'Collar', \
+    'Straddle', 'Strangle', 'ButterflyCall', 'ButterflyPut', 'IronButterfly', \
+    'CondorCall', 'Custom'}
+        Strategy type.
+    legs : :obj:`list` of :obj:`dict`
+        List of StrategyVariantLeg structures.
+
+    Note
+    ----
+    More details on allowed `strategy` values can be found `here \
+    <https://www.questrade.com/api/documentation/rest-operations/enumerations/ \
+    enumerations#strategy-types>`__.
+
+    Returns
+    -------
+    :obj:`dict`
+        StrategyVariantRequest structure.
+
     '''
     strategy_variant_request = {
         'variantId': variant_id,
@@ -47,13 +91,28 @@ def create_strategy_variant_request(variant_id, strategy, legs):
     return strategy_variant_request
 
 def create_strategy_variant_leg(symbol_id, action, ratio):
-    ''' Simple utility function to generate a StrategyVariantLeg structure as
-    required by the StrategyVariantRequest structure.
+    ''' Simple utility function to generate a StrategyVariantLeg structure.
 
-    Arguments:
-    symbolId (int)  --  Internal symbol identifier
-    action (enum)   --  Order side
-    ratio (int)     --  Numeric ration of the leg strategy
+    Parameters
+    ----------
+    symbolId : :obj:`int`
+        Internal symbol identifier.
+    action : :obj:`str`, {'Buy', 'Sell'}
+        Order side.
+    ratio : :obj:`int`
+        Numeric ration of the leg strategy.
+
+    Note
+    ----
+    More details on allowed `action` values can be found `here 
+    <https://www.questrade.com/api/documentation/rest-operations/enumerations/ \
+    enumerations#order-action>`__.
+
+    Returns
+    -------
+    :obj:`dict`
+        StrategyVariantLeg structure.
+
     '''
     strategy_variant_leg = {
         'symbolId': symbol_id,
@@ -63,19 +122,42 @@ def create_strategy_variant_leg(symbol_id, action, ratio):
     return strategy_variant_leg
 
 def create_bracket_order_component(quantity, action, limit_price, stop_price, 
-                                   order_type, time_in_force, ordre_class, 
+                                   order_type, time_in_force, order_class, 
                                    order_id=0):
-    ''' Simple utility function to generate a Component for a bracket order as
-    required by the POST accounts/:id/orders/bracket[/impact] API call.
+    ''' Simple utility to generate a BracketOrderComponent structure.
 
-    Arguments:
-    quantity (double)       --  Order quantity
-    action (enum)           --  Order side
-    limit_price (double)    --  Limit price
-    stop_price (double)     --  Stop price
-    order_type (enum)       --  Order type
-    time_in_force (enum)    --  Order duration
-    ordre_class (enum)      --  Type of component
+    Parameters
+    ----------
+    quantity : :obj:`double`
+        Order quantity.
+    action : :obj:`str`, {'Buy', 'Sell'}
+        Order side.
+    limit_price : :obj:`double`
+        Limit price.
+    stop_price : :obj:`double`
+        Stop price.
+    order_type : :obj:`str`, {'Market', 'Limit', 'Stop', 'StopLimit', \
+    'TrailStopInPercentage', 'TrailStopInDollar', \
+    'TrailStopLimitInPercentage', 'TrailStopLimitInDollar', 'LimitOnOpen', \
+    'LimitOnClose'}
+        Order type.
+    time_in_force : :obj:`str`, {'Day', 'GoodTillCanceled', \
+    'GoodTillExtendedDay', 'GoodTillDate', 'ImmediateOrCancel', 'FillOrKill'}
+        Order duration.
+    order_class : :obj:`str`, {'Primary', 'Limit', 'StopLoss'}
+        Type of component
+
+    Note
+    ----
+    More details on allowed `action`, `order_type`, `time_in_force` and 
+    `order_class` can be found `here <https://www.questrade.com/api/ \
+    documentation/rest-operations/enumerations/enumerations>`__
+
+    Returns
+    -------
+    :obj:`dict`
+        BracketOrderComponent structure.
+
     '''
     bracket_order_component = {
         'orderId': order_id,
@@ -90,13 +172,28 @@ def create_bracket_order_component(quantity, action, limit_price, stop_price,
     return bracket_order_component
 
 def create_insert_order_leg_data(symbol_id, action, leg_quantity):
-    ''' Simple utililty function to generate a InsertOrderLegData structure as
-    required by the accounts/:id/orders/strategy[/impact] API call.
+    ''' Simple utililty function to generate a InsertOrderLegData structure.
 
-    Arguments:
-    symbol_id (int)     --  Internal symbol identifier
-    action (enum)       --  Leg action
-    leg_quantity (int)  --  Leg quantity
+    Parameters
+    ----------
+    symbol_id : :obj:`int`
+        Internal symbol identifier.
+    action : :obj:`str`, {'Buy', 'Sell'}
+        Leg action.
+    leg_quantity : :obj:`int`
+        Leg quantity.
+
+    Note
+    ----
+    More details on allowed `action` values can be found `here 
+    <https://www.questrade.com/api/documentation/rest-operations/enumerations/ \
+    enumerations#order-action>`__.
+
+    Returns
+    -------
+    :obj:`dict`
+        InsertOrderLegData structure.
+
     '''
     insert_order_leg_data = {
         'symbolId': symbol_id,
