@@ -282,7 +282,7 @@ class Session():
             params.update({'endTime': utils.add_local_tz(end_time)})
         return self.do_get('v1/accoutns/{}/activities'.format(id), params)
 
-    def get_symbols(names=None, ids=None, id=None):
+    def get_symbols(self, names=None, ids=None, id=None):
         ''' Retrieves detailed information about one or more symbol.
 
         Parameters
